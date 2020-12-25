@@ -1,5 +1,5 @@
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/0a91d52a523549678c29fed053fa3552)](https://www.codacy.com/gh/Space125/restaurant-voting-REST-API/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Space125/restaurant-voting-REST-API&amp;utm_campaign=Badge_Grade)
-[![Build Status](https://travis-ci.org/Space125/restaurant-voting-REST-API.svg?branch=master)](https://travis-ci.org/Space125/restaurant-voting-REST-API)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/18c707c3dff146ec9a7d1e20a383e212)](https://www.codacy.com/gh/Space125/restaurant-voting-rest-api/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Space125/restaurant-voting-rest-api&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/Space125/restaurant-voting-rest-api.svg?branch=master)](https://travis-ci.org/Space125/restaurant-voting-rest-api)
 
 # Restaurant voting REST API
 Graduation Project
