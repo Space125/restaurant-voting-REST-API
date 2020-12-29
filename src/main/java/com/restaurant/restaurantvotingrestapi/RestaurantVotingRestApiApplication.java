@@ -8,6 +8,6 @@ public class RestaurantVotingRestApiApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(RestaurantVotingRestApiApplication.class, args);
+        System.out.println();
     }
-
 }

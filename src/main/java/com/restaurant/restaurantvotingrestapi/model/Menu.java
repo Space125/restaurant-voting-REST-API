@@ -12,7 +12,7 @@ import java.time.LocalDate;
  */
 
 @Entity
-@Table(name = "menu", uniqueConstraints = {@UniqueConstraint(columnNames = {"restaurant_id", "name", "date_menu"}, name = "dish_unique_restaurant_name_date_idx")})
+@Table(name = "menus", uniqueConstraints = {@UniqueConstraint(columnNames = {"restaurant_id", "name", "date_menu"}, name = "dish_unique_restaurant_name_date_idx")})
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

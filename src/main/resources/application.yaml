@@ -8,7 +8,7 @@ spring:
     show-sql: true
     open-in-view: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       #  http://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#configurations
       hibernate:
@@ -40,7 +40,7 @@ spring:
 logging:
   level:
     root: WARN
-    ru.javaops.topjava: DEBUG
+    com.restaurant.restaurantvotingrestapi: DEBUG
     org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: DEBUG
 
 server.servlet:

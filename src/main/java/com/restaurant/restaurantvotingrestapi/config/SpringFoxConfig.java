@@ -30,7 +30,7 @@ public class SpringFoxConfig {
                 .build()
                 .apiInfo(new ApiInfoBuilder()
                         .title("REST API documentation")
-                        .description("Приложение по <a href='https://javaops.ru/view/topjava'>курсу TopJava</a>")
+                        .description("Приложение <a href='https://github.com/Space125/restaurant-voting-rest-api#restaurant-voting-rest-api'>Restaurant voting REST API</a>")
                         .version("1.0")
                         .build())
 //                  .securitySchemes(List.of(new BasicAuth("basicAuth")))  // https://github.com/springfox/springfox/issues/3518
