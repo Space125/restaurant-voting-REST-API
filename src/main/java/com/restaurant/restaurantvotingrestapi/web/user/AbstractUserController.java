@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.restaurant.restaurantvotingrestapi.util.ValidationUtil.assureIdConsistent;
-import static com.restaurant.restaurantvotingrestapi.util.ValidationUtil.checkSingleModification;
+import static com.restaurant.restaurantvotingrestapi.util.ValidationUtil.*;
 
 /**
  * @author Ivan Kurilov on 28.12.2020
@@ -46,23 +45,23 @@ public class AbstractUserController {
         binder.addValidators(emailValidator);
     }
 
-    public ResponseEntity<User> get(int id){
+    public ResponseEntity<User> get(int id) {
         log.info("get {}", id);
         return ResponseEntity.of(userRepository.findById(id));
     }
 
     @CacheEvict(value = "users", allEntries = true)
-    public void delete(int id){
+    public void delete(int id) {
         log.info("deleted {}", id);
         checkSingleModification(userRepository.delete(id), "User id=" + id + "not found");
     }
 
-    public ResponseEntity<User> getWithVotes(int id){
+    public ResponseEntity<User> getWithVotes(int id) {
         log.info("getWithVotes {}", id);
         return ResponseEntity.of(userRepository.getWithVotes(id));
     }
 
-    protected User prepareToSave(User user){
+    protected User prepareToSave(User user) {
         return userRepository.save(UserUtil.prepareToSave(user));
     }
 
@@ -71,23 +70,23 @@ public class AbstractUserController {
         DataBinder binder = new DataBinder(user);
         binder.addValidators(emailValidator, defaultValidator);
         binder.validate();
-        if(binder.getBindingResult().hasErrors()){
+        if (binder.getBindingResult().hasErrors()) {
             throw new BindException(binder.getBindingResult());
         }
     }
 
-    public List<Vote> getAllVotes(int id){
+    public List<Vote> getAllVotes(int id) {
         log.info("getAllVotes {}", id);
         return voteRepository.getAll(id);
     }
 
-    public Vote getVoteByDate(int id, LocalDate dateVote){
+    public Vote getVoteByDate(int id, LocalDate dateVote) {
         log.info("getVoteByDate for user={} by date={}", id, dateVote);
-        return voteRepository.getByUserIdAndDateVote(id, dateVote);
+        return checkNotFoundWithId(voteRepository.getByUserIdAndDateVote(id, dateVote), id);
     }
 
-    public Vote getVoteToday(int id){
+    public Vote getVoteToday(int id) {
         log.info("getVoteToday for user={}", id);
-        return voteRepository.getByUserIdAndDateVote(id, LocalDate.now());
+        return checkNotFoundWithId(voteRepository.getByUserIdAndDateVote(id, LocalDate.now()), id);
     }
 }

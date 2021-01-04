@@ -5,7 +5,6 @@ import com.restaurant.restaurantvotingrestapi.exception.NotFoundException;
 import com.restaurant.restaurantvotingrestapi.model.HasId;
 import lombok.experimental.UtilityClass;
 
-
 import java.util.Optional;
 
 @UtilityClass

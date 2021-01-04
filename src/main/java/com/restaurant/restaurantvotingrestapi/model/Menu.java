@@ -43,4 +43,14 @@ public class Menu extends AbstractNamedEntity implements HasId {
     public Menu(Menu menu){
         this(menu.getId(), menu.getName(), menu.getPrice(), menu.getDateMenu(), menu.getRestaurant());
     }
+
+//    @Override
+//    public String toString() {
+//        return "Menu{" +
+//                "id=" + id +
+//                ", name='" + name +
+//                ", price=" + price +
+//                ", date=" + dateMenu+
+//                '}';
+//    }
 }

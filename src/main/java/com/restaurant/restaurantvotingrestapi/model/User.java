@@ -17,8 +17,8 @@ import java.util.*;
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
-@ToString(callSuper = true, exclude = "password")
+@NoArgsConstructor
+@ToString(callSuper = true, exclude = {"password", "votes"})
 public class User extends AbstractNamedEntity implements HasIdAndEmail {
 
     @Column(name = "email", nullable = false, unique = true)

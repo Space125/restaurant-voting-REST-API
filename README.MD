@@ -28,3 +28,27 @@ As a result, provide a link to github repository. It should contain the code, RE
 P.S.: Make sure everything works with the latest version that is on github :)
 
 P.P.S.: Assume that your API will be used by a frontend developer to build frontend on top of that.
+
+## REST API
+
+### Authorized user
+#### Get user profile
+
+```curl -X GET "http://localhost:8084/rest/profile" -H "accept: application/json" --user admin@gmail.com:admin```
+
+Produces JSON
+```json
+{
+  "id": 100001,
+  "name": "Admin",
+  "email": "admin@gmail.com",
+  "enabled": true,
+  "registered": "2020-12-29T13:37:57.222+00:00",
+  "roles": [
+    "ADMIN",
+    "USER"
+  ],
+  "votes": null
+}
+```
+

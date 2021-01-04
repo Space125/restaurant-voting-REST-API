@@ -11,7 +11,6 @@ import org.springframework.util.StringUtils;
 @UtilityClass
 public class UserUtil {
 
-    public static final int DEFAULT_CALORIES_PER_DAY = 2000;
     public static final PasswordEncoder PASSWORD_ENCODER = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
     public static User createNewFromTo(UserTo userTo) {

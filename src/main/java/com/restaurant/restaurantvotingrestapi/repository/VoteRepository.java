@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Ivan Kurilov on 29.12.2020
@@ -20,8 +21,8 @@ public interface VoteRepository extends BaseRepository<Vote> {
     List<Vote> getAll(@Param("userId") int userId);
 
     @Query("SELECT v FROM Vote v WHERE v.user=:user AND v.dateVote=:dateVote")
-    Vote getByUserAndDateVote(@Param("user") User user, @Param("dateVote") LocalDate dateVote);
+    Optional<Vote> getByUserAndDateVote(User user, LocalDate dateVote);
 
     @Query("SELECT v FROM Vote v WHERE v.user.id=:userId AND v.dateVote=:dateVote")
-    Vote getByUserIdAndDateVote(@Param("userId") int userId, @Param("dateVote") LocalDate dateVote);
+    Optional<Vote> getByUserIdAndDateVote(@Param("userId") int userId, @Param("dateVote") LocalDate dateVote);
 }

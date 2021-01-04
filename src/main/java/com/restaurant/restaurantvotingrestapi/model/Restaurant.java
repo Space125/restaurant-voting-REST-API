@@ -17,8 +17,8 @@ import java.util.Set;
 @Table(name = "restaurants", uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "restaurant_unique_name_idx")})
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
+@NoArgsConstructor
+@ToString(callSuper = true, exclude = {"menus", "votes"})
 public class Restaurant extends AbstractNamedEntity implements HasId {
 
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()")
@@ -29,15 +29,15 @@ public class Restaurant extends AbstractNamedEntity implements HasId {
     private boolean enabled = true;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
-    @OrderBy("dateVote DESC")
+    @OrderBy(value = "dateVote DESC")
     @Fetch(value = FetchMode.SUBSELECT)
     @JsonManagedReference(value = "restaurantVotes")
     private Set<Vote> votes;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
-    @OrderBy("dateMenu DESC")
+    @OrderBy(value = "dateMenu DESC")
     @Fetch(value = FetchMode.SUBSELECT)
-    @JsonManagedReference(value = "restaurantVotes")
+    @JsonManagedReference(value = "restaurantMenus")
     private Set<Menu> menus;
 
     public Restaurant(Integer id, String name, boolean enabled, Date registered) {
