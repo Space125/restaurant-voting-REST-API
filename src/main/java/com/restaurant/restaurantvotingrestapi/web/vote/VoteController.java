@@ -29,12 +29,11 @@ import java.net.URI;
 public class VoteController extends AbstractVoteController {
     static final String REST_URL = "/rest/profile/votes";
 
-
     @PostMapping
     @Transactional
     @CacheEvict(allEntries = true)
-    public ResponseEntity<Vote> create(@RequestParam int restaurantId, @AuthenticationPrincipal AuthUser authUser){
-        log.info("create vote for restaurant={}", restaurantId);
+    public ResponseEntity<Vote> create(@RequestParam int restaurantId, @AuthenticationPrincipal AuthUser authUser) {
+        log.info("create or change vote for restaurant={}", restaurantId);
         Vote vote = createOrChange(authUser.id(), restaurantId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")

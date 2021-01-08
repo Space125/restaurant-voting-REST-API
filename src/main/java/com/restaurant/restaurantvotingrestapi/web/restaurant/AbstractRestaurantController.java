@@ -1,14 +1,11 @@
 package com.restaurant.restaurantvotingrestapi.web.restaurant;
 
-import com.restaurant.restaurantvotingrestapi.dto.RestaurantTo;
+import com.restaurant.restaurantvotingrestapi.model.Menu;
 import com.restaurant.restaurantvotingrestapi.model.Restaurant;
 import com.restaurant.restaurantvotingrestapi.repository.MenuRepository;
 import com.restaurant.restaurantvotingrestapi.repository.RestaurantRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.time.LocalDate;
-import java.util.List;
 
 import static com.restaurant.restaurantvotingrestapi.util.ValidationUtil.checkNotFoundWithId;
 import static com.restaurant.restaurantvotingrestapi.util.ValidationUtil.checkSingleModification;
@@ -26,32 +23,36 @@ public abstract class AbstractRestaurantController {
     @Autowired
     protected MenuRepository menuRepository;
 
-    public Restaurant get(int id){
+    public Restaurant get(int id) {
         log.info("get restaurant={}", id);
         return checkNotFoundWithId(restaurantRepository.findById(id), id);
     }
 
-    public void delete(int id){
-        log.info("deleted {}", id);
+    public void deleteRestaurant(int id) {
+        log.info("deleted restaurant={}", id);
         checkSingleModification(restaurantRepository.delete(id), "Restaurant id=" + id + "not found");
     }
 
-    public List<RestaurantTo> getAllVotesByDate(LocalDate date){
-        log.info("get all votes by date={}", date);
-        return restaurantRepository.getAllByDate(date);
-    }
-
-    public Restaurant create(Restaurant restaurant){
-        log.info("create restaurant {}", restaurant);
-        return restaurantRepository.save(restaurant);
-    }
-
-    public void update(Restaurant restaurant, int id){
+    public void updateRestaurant(Restaurant restaurant, int id) {
         log.info("update restaurant {}", restaurant);
         checkNotFoundWithId(restaurantRepository.findById(id), "Restaurant id=" + id + "not found");
         restaurantRepository.save(restaurant);
 
     }
 
+    public Menu getMenu(int id, int restaurantId) {
+        log.info("get menu={} for restaurant={}", id, restaurantId);
+        return checkNotFoundWithId(menuRepository.findById(id), restaurantId);
+    }
 
+    public void updateMenu(Menu menu, int restaurantId, int menuId) {
+        checkNotFoundWithId(menuRepository.findById(menuId), restaurantId);
+        menu.setRestaurant(restaurantRepository.getExisted(restaurantId));
+        menuRepository.save(menu);
+    }
+
+    public void deleteMenu(int id, int restaurantId) {
+        log.info("deleted menu={} for restaurant={}", id, restaurantId);
+        checkSingleModification(menuRepository.delete(id, restaurantId), "Restaurant id=" + id + "not found");
+    }
 }

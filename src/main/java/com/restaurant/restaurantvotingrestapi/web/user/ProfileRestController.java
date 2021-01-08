@@ -34,7 +34,7 @@ import java.util.List;
 @Slf4j
 @CacheConfig(cacheNames = "users")
 public class ProfileRestController extends AbstractUserController {
-    static final String REST_URL = "/rest/profile";
+    public static final String REST_URL = "/rest/profile";
 
     @GetMapping
     public HttpEntity<User> get(@AuthenticationPrincipal AuthUser authUser) {
@@ -67,10 +67,12 @@ public class ProfileRestController extends AbstractUserController {
         validateBeforeUpdate(userTo, authUser.id());
         User user = userRepository.getExisted(userTo.id());
         prepareToSave(UserUtil.updateFromTo(user, userTo));
+        log.info("update user={}", authUser.id());
     }
 
     @GetMapping("/with-votes")
     public ResponseEntity<User> getWithVotes(@AuthenticationPrincipal AuthUser authUser) {
+        log.info("get user={} profile with votes", authUser.id());
         return ResponseEntity.of(userRepository.getWithVotes(authUser.id()));
     }
 

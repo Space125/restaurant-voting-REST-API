@@ -39,15 +39,17 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CacheEvict(allEntries = true)
     public void delete(@PathVariable int id) {
-        super.delete(id);
+        super.deleteRestaurant(id);
 
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @CacheEvict(allEntries = true)
-    public ResponseEntity<Restaurant> createWithLocation(@Valid @RequestBody Restaurant restaurant) {
+    @Transactional
+    public ResponseEntity<Restaurant> createRestaurant(@Valid @RequestBody Restaurant restaurant) {
         ValidationUtil.checkNew(restaurant);
-        Restaurant created = super.create(restaurant);
+        log.info("create restaurant {}", restaurant);
+        Restaurant created = restaurantRepository.save(restaurant);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentRequestUri()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
@@ -57,9 +59,10 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CacheEvict(allEntries = true)
-    public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
+    @Transactional
+    public void updateRestaurant(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
         ValidationUtil.assureIdConsistent(restaurant, id);
-        super.update(restaurant, id);
+        super.updateRestaurant(restaurant, id);
     }
 
     @PatchMapping("/{id}")
@@ -73,8 +76,44 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     }
 
     @GetMapping(MENU_REST_URL)
-    public List<Menu> getAllMenus(@PathVariable int restaurantId){
+    public List<Menu> getAllMenus(@PathVariable int restaurantId) {
         log.info("getAllMenus for restaurant={}", restaurantId);
         return menuRepository.getAll(restaurantId);
+    }
+
+    @GetMapping(MENU_REST_URL + "/{menuId}")
+    public Menu getMenu(@PathVariable int restaurantId, @PathVariable int menuId) {
+        return super.getMenu(menuId, restaurantId);
+    }
+
+    @PostMapping(value = MENU_REST_URL, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @CacheEvict(allEntries = true)
+    @Transactional
+    public ResponseEntity<Menu> createMenu(@PathVariable int restaurantId, @Valid @RequestBody Menu menu) {
+        ValidationUtil.checkNew(menu);
+        log.info("create menu {} for restaurant {}", menu, restaurantId);
+        menu.setRestaurant(restaurantRepository.getExisted(restaurantId));
+        Menu created = menuRepository.save(menu);
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + MENU_REST_URL + "/{menuId}")
+                .buildAndExpand(restaurantId, created.getId()).toUri();
+        return ResponseEntity.created(uriOfNewResource).body(created);
+    }
+
+    @PutMapping(value = MENU_REST_URL + "/{menuId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @CacheEvict(allEntries = true)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Transactional
+    public void updateMenu(@PathVariable int restaurantId, @PathVariable int menuId, @Valid @RequestBody Menu menu) {
+        log.info("update menu {} for restaurant {}", menu, restaurantId);
+        ValidationUtil.assureIdConsistent(menu, menuId);
+        super.updateMenu(menu, restaurantId, menuId);
+    }
+
+    @DeleteMapping(MENU_REST_URL + "/{menuId}")
+    @CacheEvict(allEntries = true)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteMenu(@PathVariable int restaurantId, @PathVariable int menuId) {
+        super.deleteMenu(menuId, restaurantId);
     }
 }

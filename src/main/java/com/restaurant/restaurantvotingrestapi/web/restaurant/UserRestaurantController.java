@@ -1,6 +1,7 @@
 package com.restaurant.restaurantvotingrestapi.web.restaurant;
 
 import com.restaurant.restaurantvotingrestapi.dto.RestaurantTo;
+import com.restaurant.restaurantvotingrestapi.model.Menu;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheConfig;
@@ -20,12 +21,29 @@ import java.util.List;
 @Slf4j
 @AllArgsConstructor
 @CacheConfig(cacheNames = "restaurant")
-public class UserRestaurantController extends AbstractRestaurantController{
+public class UserRestaurantController extends AbstractRestaurantController {
     public static final String REST_URL = "/rest/profile/restaurants";
 
     @GetMapping("/by")
-    public List<RestaurantTo> getVotesByDate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
-        return super.getAllVotesByDate(date);
+    public List<RestaurantTo> getVotesByDate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        log.info("get all votes by date={}", date);
+        return restaurantRepository.getAllByDate(date);
     }
 
+    @GetMapping
+    public List<RestaurantTo> getAll() {
+        log.info("get rating all restaurants for anonymous visitors on current date");
+        return restaurantRepository.getAllByDate(LocalDate.now());
+    }
+
+    @GetMapping("/{restaurantId}/menus/by")
+    public List<Menu> getMenusByDate(@PathVariable int restaurantId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        log.info("get menus for {} on {}", restaurantId, date);
+        return menuRepository.getByDate(restaurantId, date);
+    }
+
+    @GetMapping("/{restaurantId}/menus/{menuId}")
+    public Menu getMenu(@PathVariable int restaurantId, @PathVariable int menuId) {
+        return super.getMenu(menuId, restaurantId);
+    }
 }

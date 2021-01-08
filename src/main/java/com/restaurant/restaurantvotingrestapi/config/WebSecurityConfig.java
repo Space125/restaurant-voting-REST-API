@@ -51,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/rest/admin/**").hasRole(Role.ADMIN.name())
-                .antMatchers("/rest/profile/register").anonymous()
+                .antMatchers("/rest/profile/register", "/rest/profile/restaurants").anonymous()
                 .antMatchers("/rest/**").authenticated()
                 .and().httpBasic()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
