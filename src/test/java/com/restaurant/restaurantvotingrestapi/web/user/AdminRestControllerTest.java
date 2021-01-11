@@ -1,20 +1,25 @@
 package com.restaurant.restaurantvotingrestapi.web.user;
 
 import com.restaurant.restaurantvotingrestapi.exception.NotFoundException;
+import com.restaurant.restaurantvotingrestapi.model.Role;
 import com.restaurant.restaurantvotingrestapi.model.User;
 import com.restaurant.restaurantvotingrestapi.repository.UserRepository;
 import com.restaurant.restaurantvotingrestapi.web.AbstractControllerTest;
+import com.restaurant.restaurantvotingrestapi.web.GlobalExceptionHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.restaurant.restaurantvotingrestapi.TestUtil.readFromJson;
 import static com.restaurant.restaurantvotingrestapi.TestUtil.userHttpBasic;
 import static com.restaurant.restaurantvotingrestapi.UserTestData.*;
 import static com.restaurant.restaurantvotingrestapi.VoteTestData.VOTE_LAZY_MATCHER;
 import static com.restaurant.restaurantvotingrestapi.VoteTestData.vote_1;
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -137,6 +142,56 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent());
 
         assertFalse(userRepository.getExisted(USER_ID).isEnabled());
+    }
+
+    @Test
+    void createInvalid() throws Exception {
+        User invalid = new User(null, null, "", "newPass", Role.USER, Role.ADMIN);
+        perform(MockMvcRequestBuilders.post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(admin))
+                .content(jsonWithPassword(invalid, "newPass")))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    void updateInvalid() throws Exception {
+        User invalid = new User(user);
+        invalid.setName("");
+        perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(admin))
+                .content(jsonWithPassword(invalid, "password")))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void updateDuplicate() throws Exception {
+        User updated = new User(user);
+        updated.setEmail("admin@gmail.com");
+        perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(admin))
+                .content(jsonWithPassword(updated, "password")))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(content().string(containsString(GlobalExceptionHandler.EXCEPTION_DUPLICATE_EMAIL)));
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void createDuplicate() throws Exception {
+        User expected = new User(null, "New", "user@yandex.ru", "newPass", Role.USER, Role.ADMIN);
+        perform(MockMvcRequestBuilders.post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(admin))
+                .content(jsonWithPassword(expected, "newPass")))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(content().string(containsString(GlobalExceptionHandler.EXCEPTION_DUPLICATE_EMAIL)));
     }
 
     @Test
