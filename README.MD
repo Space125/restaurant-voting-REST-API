@@ -17,7 +17,7 @@ Build a voting system for deciding where to have lunch.
 * Menu changes each day (admins do the updates)
 * Users can vote on which restaurant they want to have lunch at
 * Only one vote counted per user
-* If user votes again the same day:
+* # If user votes again the same day:
     - If it is before 11:00 we assume that he changed his mind.
     - If it is after 11:00 then it is too late, vote can't be changed
 
@@ -29,7 +29,9 @@ P.S.: Make sure everything works with the latest version that is on github :)
 
 P.P.S.: Assume that your API will be used by a frontend developer to build frontend on top of that.
 
-## REST API
+## [REST API made with used Swagger](http://localhost:8084/swagger-ui/)
+
+## REST API 
 
 ### Unauthorized visitors
 #### Register visitor
@@ -294,8 +296,8 @@ Produces JSON
   },
   {
     "id": 100001,
-    "name": "Mikky",
-    "email": "mikky@disnay.com",
+    "name": "Mickey",
+    "email": "mickey@disney.com",
     "enabled": true,
     "registered": "2021-01-08T11:33:17.899+00:00",
     "roles": [
@@ -414,14 +416,14 @@ Produces JSON
 ```
 
 #### Get user by e-mail
-```curl -X GET "http://localhost:8084/rest/admin/users/by?email=mikky@disnay.com" -H "accept: application/json" --user admin@gmail.com:admin```
+```curl -X GET "http://localhost:8084/rest/admin/users/by?email=mickey@disney.com" -H "accept: application/json" --user admin@gmail.com:admin```
 
 Produces JSON
 ```json
 {
   "id": 100001,
-  "name": "Mikky",
-  "email": "mikky@disnay.com",
+  "name": "Mickey",
+  "email": "mickey@disney.com",
   "enabled": true,
   "registered": "2021-01-08T11:33:17.899+00:00",
   "roles": [
@@ -453,7 +455,7 @@ Produces JSON
 ```
 
 #### Update user
-```curl -X PUT "http://localhost:8084/rest/admin/users/100001" -H "accept: */*" -H "Content-Type: application/json" -d "{\"name\":\"updateName\",\"email\":\"updateemail@ya.ru\",\"password\":\"updatePassword\"}" --user admin@gmail.com:admin```
+```curl -X PUT "http://localhost:8084/rest/admin/users/100001" -H "accept: */*" -H "Content-Type: application/json" -d "{\"id\":\"100001\",\"name\":\"newName\",\"email\":\"newemail@ya.ru\",\"password\":\"newPassword\"}" --user admin@gmail.com:admin```
 
 Produces - no content, status 204
 

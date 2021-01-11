@@ -26,7 +26,7 @@ import static com.restaurant.restaurantvotingrestapi.util.ValidationUtil.*;
  */
 
 @Slf4j
-public class AbstractUserController {
+public abstract class AbstractUserController {
 
     @Autowired
     protected UserRepository userRepository;

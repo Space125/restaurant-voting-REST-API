@@ -3,7 +3,7 @@
 
 INSERT INTO USERS (NAME, EMAIL, PASSWORD)
 VALUES ('User', 'user@yandex.ru', '{noop}password'),
-       ('Mikky', 'mikky@disnay.com', '{noop}disnay'),
+       ('Mickey', 'mickey@disney.com', '{noop}disney'),
        ('Admin', 'admin@gmail.com', '{noop}admin');
 
 INSERT INTO USER_ROLES (ROLE, USER_ID)
