@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Ivan Kurilov on 12.01.2021
  */
+
 class UserRestaurantRestControllerTest extends AbstractControllerTest {
     private static final String REST_URL = UserRestaurantController.REST_URL + '/';
     private static final String FULL_MENU_REST_URL = UserRestaurantController.REST_URL + UserRestaurantController.MENU_REST_URL + '/';

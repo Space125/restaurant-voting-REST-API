@@ -1,9 +1,7 @@
 package com.restaurant.restaurantvotingrestapi.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.domain.Persistable;
-import org.springframework.data.util.ProxyUtils;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
@@ -16,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
-public abstract class AbstractBaseEntity implements Persistable<Integer>, HasId{
+public abstract class AbstractBaseEntity implements Persistable<Integer>, HasId {
 
     public static final int START_SEQ = 100000;
 

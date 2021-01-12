@@ -21,6 +21,7 @@ import java.net.URI;
 /**
  * @author Ivan Kurilov on 29.12.2020
  */
+
 @RestController
 @RequestMapping(value = VoteController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j

@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 /**
  * @author Ivan Kurilov on 28.12.2020
  */
+
 @RestControllerAdvice
 @AllArgsConstructor
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -32,7 +33,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     @NonNull
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-                                                                   @NonNull HttpHeaders headers, @NonNull HttpStatus status, @NonNull WebRequest request) {
+                                                                  @NonNull HttpHeaders headers, @NonNull HttpStatus status, @NonNull WebRequest request) {
         return handleBindingErrors(ex.getBindingResult(), request);
     }
 

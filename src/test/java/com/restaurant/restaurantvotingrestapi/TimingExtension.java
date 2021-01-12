@@ -9,7 +9,6 @@ import org.springframework.util.StopWatch;
  * @author Ivan Kurilov on 12.01.2021
  */
 
-//@Slf4j
 public class TimingExtension implements
         BeforeTestExecutionCallback, AfterTestExecutionCallback, BeforeAllCallback, AfterAllCallback {
     private static final Logger log = LoggerFactory.getLogger("result");

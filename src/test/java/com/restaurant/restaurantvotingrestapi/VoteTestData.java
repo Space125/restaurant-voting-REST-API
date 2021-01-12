@@ -13,6 +13,7 @@ import static com.restaurant.restaurantvotingrestapi.model.AbstractBaseEntity.ST
 /**
  * @author Ivan Kurilov on 11.01.2021
  */
+
 public class VoteTestData {
     public static TestMatcher<Vote> VOTE_MATCHER = TestMatcher.usingEqualsComparator(Vote.class);
     public static TestMatcher<Vote> VOTE_LAZY_MATCHER = TestMatcher.usingIgnoringFieldsComparator(Vote.class, "user", "restaurant");

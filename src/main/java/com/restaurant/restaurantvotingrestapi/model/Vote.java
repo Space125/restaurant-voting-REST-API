@@ -13,12 +13,12 @@ import java.time.LocalDate;
  */
 
 @Entity
-@Table(name = "votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date_vote"}, name="vote_unique_user_date_idx")})
+@Table(name = "votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date_vote"}, name = "vote_unique_user_date_idx")})
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true)
-public class Vote extends AbstractBaseEntity{
+public class Vote extends AbstractBaseEntity {
 
     @Column(name = "date_vote", nullable = false)
     @NonNull

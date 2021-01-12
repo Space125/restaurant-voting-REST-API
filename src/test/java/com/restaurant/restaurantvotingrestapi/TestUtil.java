@@ -13,6 +13,7 @@ import java.util.List;
 /**
  * @author Ivan Kurilov on 11.01.2021
  */
+
 public class TestUtil {
     public static String getContent(MvcResult result) throws UnsupportedEncodingException {
         return result.getResponse().getContentAsString();

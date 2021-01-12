@@ -27,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Ivan Kurilov on 11.01.2021
  */
+
 class ProfileRestControllerTest extends AbstractControllerTest {
     @Autowired
     private UserRepository userRepository;

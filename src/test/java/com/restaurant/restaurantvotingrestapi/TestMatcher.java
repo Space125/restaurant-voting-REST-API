@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Ivan Kurilov on 11.01.2021
  */
+
 public class TestMatcher<T> {
     private final Class<T> clazz;
     private final BiConsumer<T, T> assertion;

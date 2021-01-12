@@ -10,6 +10,7 @@ import static com.restaurant.restaurantvotingrestapi.model.AbstractBaseEntity.ST
 /**
  * @author Ivan Kurilov on 12.01.2021
  */
+
 public class MenuTestData {
     public static TestMatcher<Menu> MENU_MATCHER = TestMatcher.usingIgnoringFieldsComparator(Menu.class, "restaurant");
 

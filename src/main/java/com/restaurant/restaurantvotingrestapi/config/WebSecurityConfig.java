@@ -22,7 +22,6 @@ import java.util.Optional;
 
 import static com.restaurant.restaurantvotingrestapi.util.UserUtil.PASSWORD_ENCODER;
 
-
 @Configuration
 @EnableWebSecurity
 @Slf4j

@@ -77,18 +77,18 @@ public class ProfileRestController extends AbstractUserController {
     }
 
     @GetMapping("/votes")
-    public List<Vote> getAllVotes(@AuthenticationPrincipal AuthUser authUser){
+    public List<Vote> getAllVotes(@AuthenticationPrincipal AuthUser authUser) {
         return super.getAllVotes(authUser.id());
     }
 
     @GetMapping("/votes/by")
     public Vote getVoteByDate(@AuthenticationPrincipal AuthUser authUser,
-                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate date){
+                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return super.getVoteByDate(authUser.id(), date);
     }
 
     @GetMapping("/votes/today")
-    public Vote getVoteToday(@AuthenticationPrincipal AuthUser authUser){
+    public Vote getVoteToday(@AuthenticationPrincipal AuthUser authUser) {
         return super.getVoteToday(authUser.id());
     }
 }
