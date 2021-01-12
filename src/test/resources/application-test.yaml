@@ -1,3 +1,10 @@
 spring:
   cache:
     type: none
+
+#logging:
+#  level:
+#    com.restaurant.restaurantvotingrestapi.web: debug
+#  pattern:
+#    console: "%d{HH:mm:ss.SSS} %highlight(%-5level) %cyan(%class{50}.%M:%L) - %msg%n"
+#    TimingExtension: "%magenta(%msg%n)"

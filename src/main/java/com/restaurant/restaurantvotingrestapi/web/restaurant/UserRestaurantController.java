@@ -23,6 +23,7 @@ import java.util.List;
 @CacheConfig(cacheNames = "restaurant")
 public class UserRestaurantController extends AbstractRestaurantController {
     public static final String REST_URL = "/rest/profile/restaurants";
+    public static final String MENU_REST_URL = "/{restaurantId}/menus";
 
     @GetMapping("/by")
     public List<RestaurantTo> getVotesByDate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
@@ -36,13 +37,13 @@ public class UserRestaurantController extends AbstractRestaurantController {
         return restaurantRepository.getAllByDate(LocalDate.now());
     }
 
-    @GetMapping("/{restaurantId}/menus/by")
+    @GetMapping(MENU_REST_URL + "/by")
     public List<Menu> getMenusByDate(@PathVariable int restaurantId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         log.info("get menus for {} on {}", restaurantId, date);
         return menuRepository.getByDate(restaurantId, date);
     }
 
-    @GetMapping("/{restaurantId}/menus/{menuId}")
+    @GetMapping(MENU_REST_URL + "/{menuId}")
     public Menu getMenu(@PathVariable int restaurantId, @PathVariable int menuId) {
         return super.getMenu(menuId, restaurantId);
     }

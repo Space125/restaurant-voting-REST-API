@@ -30,12 +30,12 @@ public abstract class AbstractRestaurantController {
 
     public void deleteRestaurant(int id) {
         log.info("deleted restaurant={}", id);
-        checkSingleModification(restaurantRepository.delete(id), "Restaurant id=" + id + "not found");
+        checkSingleModification(restaurantRepository.delete(id), "Restaurant id=" + id + " not found");
     }
 
     public void updateRestaurant(Restaurant restaurant, int id) {
         log.info("update restaurant {}", restaurant);
-        checkNotFoundWithId(restaurantRepository.findById(id), "Restaurant id=" + id + "not found");
+        checkNotFoundWithId(restaurantRepository.findById(id), "Restaurant id=" + id + " not found");
         restaurantRepository.save(restaurant);
 
     }
@@ -53,6 +53,6 @@ public abstract class AbstractRestaurantController {
 
     public void deleteMenu(int id, int restaurantId) {
         log.info("deleted menu={} for restaurant={}", id, restaurantId);
-        checkSingleModification(menuRepository.delete(id, restaurantId), "Restaurant id=" + id + "not found");
+        checkSingleModification(menuRepository.delete(id, restaurantId), "Menu id=" + id + " not found");
     }
 }
